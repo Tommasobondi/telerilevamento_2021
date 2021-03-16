@@ -1,0 +1,5 @@
+#dopoprovaseva
+library(raster)
+setwd("C:/lab/")
+trieste<- brick("p224r63_2011_masked.grd")
+plot(trieste)

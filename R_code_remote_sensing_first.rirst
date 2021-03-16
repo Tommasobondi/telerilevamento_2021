@@ -1,0 +1,29 @@
+> #primo codice_argomento:imparare
+> setwd("c:/lab/")
+> local({pkg <- select.list(sort(.packages(all.available = TRUE)),graphics=TRUE)
++ if(nchar(pkg)) library(pkg, character.only=TRUE)})
+> utils:::menuInstallPkgs()
+--- Please select a CRAN mirror for use in this session ---
+trying URL 'https://cran.mirror.garr.it/CRAN/bin/windows/contrib/4.0/raster_3.4-5.zip'
+Content type 'application/zip' length 3558622 bytes (3.4 MB)
+downloaded 3.4 MB
+
+package ‘raster’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+        C:\Users\tommaso\AppData\Local\Temp\Rtmp0OU7LS\downloaded_packages
+> library(raster)
+Loading required package: sp
+> immagine<-brick("p224r63_2011_masked.grd")
+> immagine
+class      : RasterBrick 
+dimensions : 1499, 2967, 4447533, 7  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : 579765, 668775, -522705, -477735  (xmin, xmax, ymin, ymax)
+crs        : +proj=utm +zone=22 +datum=WGS84 +units=m +no_defs 
+source     : C:/lab/p224r63_2011_masked.grd 
+names      :       B1_sre,       B2_sre,       B3_sre,       B4_sre,       B5_sre,        B6_bt,       B7_sre 
+min values : 0.000000e+00, 0.000000e+00, 0.000000e+00, 1.196277e-02, 4.116526e-03, 2.951000e+02, 0.000000e+00 
+max values :    0.1249041,    0.2563655,    0.2591587,    0.5592193,    0.4894984,  305.2000000,    0.3692634 
+
+> plot(immagine)

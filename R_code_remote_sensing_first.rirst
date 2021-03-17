@@ -27,3 +27,37 @@ min values : 0.000000e+00, 0.000000e+00, 0.000000e+00, 1.196277e-02, 4.116526e-0
 max values :    0.1249041,    0.2563655,    0.2591587,    0.5592193,    0.4894984,  305.2000000,    0.3692634 
 
 > plot(immagine)
+
+
+#LEZIONE 2
+> library(raster)
+Loading required package: sp
+> setwd("c:/lab/")
+> brick("p224r63_2011_masked.grd")
+class      : RasterBrick 
+dimensions : 1499, 2967, 4447533, 7  (nrow, ncol, ncell, nlayers)
+resolution : 30, 30  (x, y)
+extent     : 579765, 668775, -522705, -477735  (xmin, xmax, ymin, ymax)
+crs        : +proj=utm +zone=22 +datum=WGS84 +units=m +no_defs 
+source     : C:/lab/p224r63_2011_masked.grd 
+names      :       B1_sre,       B2_sre,       B3_sre,       B4_sre,       B5_sre,        B6_bt,       B7_sre 
+min values : 0.000000e+00, 0.000000e+00, 0.000000e+00, 1.196277e-02, 4.116526e-03, 2.951000e+02, 0.000000e+00 
+max values :    0.1249041,    0.2563655,    0.2591587,    0.5592193,    0.4894984,  305.2000000,    0.3692634 
+
+> trieste<- brick("p224r63_2011_masked.grd")
+> plot(trieste)
+> colorRampPalette(c("black","grey","light grey"))(100)
+  [1] "#000000" "#030303" "#070707" "#0B0B0B" "#0F0F0F" "#131313" "#171717" "#1A1A1A" "#1E1E1E"
+ [10] "#222222" "#262626" "#2A2A2A" "#2E2E2E" "#313131" "#353535" "#393939" "#3D3D3D" "#414141"
+ [19] "#454545" "#484848" "#4C4C4C" "#505050" "#545454" "#585858" "#5C5C5C" "#5F5F5F" "#636363"
+ [28] "#676767" "#6B6B6B" "#6F6F6F" "#737373" "#767676" "#7A7A7A" "#7E7E7E" "#828282" "#868686"
+ [37] "#8A8A8A" "#8E8E8E" "#919191" "#959595" "#999999" "#9D9D9D" "#A1A1A1" "#A5A5A5" "#A8A8A8"
+ [46] "#ACACAC" "#B0B0B0" "#B4B4B4" "#B8B8B8" "#BCBCBC" "#BEBEBE" "#BEBEBE" "#BFBFBF" "#BFBFBF"
+ [55] "#BFBFBF" "#C0C0C0" "#C0C0C0" "#C1C1C1" "#C1C1C1" "#C2C2C2" "#C2C2C2" "#C2C2C2" "#C3C3C3"
+ [64] "#C3C3C3" "#C4C4C4" "#C4C4C4" "#C5C5C5" "#C5C5C5" "#C5C5C5" "#C6C6C6" "#C6C6C6" "#C7C7C7"
+ [73] "#C7C7C7" "#C7C7C7" "#C8C8C8" "#C8C8C8" "#C9C9C9" "#C9C9C9" "#CACACA" "#CACACA" "#CACACA"
+ [82] "#CBCBCB" "#CBCBCB" "#CCCCCC" "#CCCCCC" "#CDCDCD" "#CDCDCD" "#CDCDCD" "#CECECE" "#CECECE"
+ [91] "#CFCFCF" "#CFCFCF" "#D0D0D0" "#D0D0D0" "#D0D0D0" "#D1D1D1" "#D1D1D1" "#D2D2D2" "#D2D2D2"
+[100] "#D3D3D3"
+> cl<-colorRampPalette(c("black","grey","light grey"))(100)
+> plot(trieste,col=cl)

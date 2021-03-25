@@ -60,6 +60,6 @@ clnir<-colorRampPalette(c("red","yellow","orange"))(200)
 #with the old good plot i "print" every band in the colour tath i've assigned in the graphics order that i've decided with COLORRAMPPALETTE and PAR(MF..)
 plot(trieste$B1_sre, col=clblue)
 plot(trieste$B2_sre, col=clgreen)
-plot(trieste$B3_sre, col=clrerd)
+plot(trieste$B3_sre, col=clred)
 plot(trieste$B4_sre,col=clnir)
 

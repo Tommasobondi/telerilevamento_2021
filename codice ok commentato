@@ -1,0 +1,65 @@
+#dopoprovaseva
+#attivazione funz raster precedente,ente installta
+library(raster)
+#recupero file esterno(in cartella lab)
+setwd("C:/lab/")
+#assegno nome a miei dati, ora interni a r
+trieste<- brick("p224r63_2011_masked.grd")
+#funz plot (visualizza) di dati denominati
+plot(trieste)
+#cambio di scala colori presntazioni dati
+colorRampPalette(c("black","grey","light grey"))(100)
+cl<-colorRampPalette(c("black","grey","light grey"))(100)
+plot(trieste,col=cl)
+#BANDE RILEVATE DA LENDSAT
+#banda1=blu
+#banda2=verde
+#banda3=rosso
+#banda4=infrared vicino
+#banda5=infrared medio
+#banda6=infrared termico
+#banda7=infrared medio
+#in order to visualize only one band->clean then current graph with dev.off
+dev.off()
+#in order to visualize only one band->tie up original immagine with the band that y want to visualize ($ simbnoloche lega)
+plot(trieste$B1_sre)
+#modify colours of immagine with colorrampplalette(comesopra)
+#con sequenza colori ustata prima(named CL)
+plot(trieste$B1_sre,col=cl)
+#con sequenza colori nuova(named CLO)
+clo<-colorRampPalette(c("green","blue","red","yellow"))(200)
+plot(trieste$B1_sre,col=clo)
+#clean all with dev.off
+dev.off()
+#with "par" i structure the pattern of the new plot, in this case 2 band for graphics(what i visualize), structured in 1 row and 2 columns
+par(mfrow=c(1,2))
+#now that i've structured the pattern of the graphics i camn plot wathever band i wont in it, in the limit of the stucture that i've decided wit the comand "par"
+plot(trieste$B1_sre)
+plot(trieste$B2_sre)
+#exchange colums with row modyfing the argoument of the functi "par"
+par(mfrow=c(2,1))
+plot(trieste$B1_sre)
+plot(trieste$B2_sre)
+#parfmROW row and colums, parmfCOL clumns and row (in this case i'm going to have a graphics with 1 column and 4 rows with thenfirst 4 landsat's bands)
+par(mfcol=c(1,4))
+plot(trieste$B1_sre)
+plot(trieste$B2_sre)
+plot(trieste$B3_sre)
+plot(trieste$B4_sre)
+#i can play the same "game" changing col/row or the numbers(n of col/row) in the argoument, i can even change the colour's ramp of the immagine with colorramppalette, ALWAY DEV OFF IN ORDER TO CLEAN THE GRAPHIC WINDOW)
+par(mfcol=c(2,2))
+plot(trieste$B1_sre)
+plot(trieste$B2_sre)
+plot(trieste$B3_sre)
+plot(trieste$B4_sre)
+#i assigne "proper" colour to every band, every part of the graphics (see row 49)
+clblue<-colorRampPalette(c("dark blue","blue","light blue"))(200)
+clgreen<-colorRampPalette(c("dark green","green","light green"))(200)
+clred<-colorrampPalette(c("dark red","red","pink"))(200)
+clnir<-colorRampPalette(c("red","yellow","orange"))(200)
+#with the old good plot i "print" every band in the colour tath i've assigned in the graphics order that i've decided with COLORRAMPPALETTE and PAR(MF..)
+plot(trieste$B1_sre, col=clblue)
+plot(trieste$B2_sre, col=clgreen)
+plot(trieste$B3_sre, col=clrerd)
+plot(trieste$B4_sre,col=clnir)
+

@@ -3,7 +3,7 @@
 library(raster)
 #recupero file esterno(in cartella lab)
 setwd("C:/lab/")
-#assegno nome a miei dati, ora interni a r
+#assegno nome a miei dati, ora interni a r, li carico con funzione BRICK
 trieste<- brick("p224r63_2011_masked.grd")
 #funz plot (visualizza) di dati denominati
 plot(trieste)
@@ -62,4 +62,42 @@ plot(trieste$B1_sre, col=clblue)
 plot(trieste$B2_sre, col=clgreen)
 plot(trieste$B3_sre, col=clred)
 plot(trieste$B4_sre,col=clnir)
-
+#with functio PLOTRBG i can create a multilayer raster based on the three visible band(blu, green, red)(word in our vision)
+#argoument stretch help the visualization of the band, by stretching the band alwyas in a range from 0 to 1
+plotRGB(trieste,r=3,g=2,b=1,stretch="Lin")
+#change band in the three "position" allowed by rgb pattern. By using infared in red i can visualize this band, that i can't normally see)
+plotRGB(trieste,r=4,g=3,b=2, stretch="Lin")
+#change colour, infrared in green
+plotRGB(trieste,r=3,g=4,b=2, stretch="Lin")
+#change
+plotRGB(trieste,r=3,g=2,b=4, stretch="Lin")
+#par function (row 49,50)+plotRGB function
+par(mfcol=c(2,2))
+plotRGB(trieste,r=3,g=2,b=1,stretch="Lin")
+plotRGB(trieste,r=4,g=3,b=2, stretch="Lin")
+plotRGB(trieste,r=3,g=4,b=2, stretch="Lin")
+plotRGB(trieste,r=3,g=2,b=4, stretch="Lin")
+#stretch can be different by linear, now i use histogram stretch
+par(mfcol=c(2,2))
+plotRGB(trieste,r=3,g=2,b=1,stretch="hist")
+plotRGB(trieste,r=4,g=3,b=2, stretch="hist")
+plotRGB(trieste,r=3,g=4,b=2, stretch="hist")
+plotRGB(trieste,r=3,g=2,b=4, stretch="hist")
+#comparison between linar and histogram stretch
+par(mfcol=c(2,1))
+plotRGB(trieste,r=3,g=4,b=2, stretch="hist")
+plotRGB(trieste,r=3,g=4,b=2, stretch="lin")
+#total comparison (lin,hist)
+par(mfrow=c(4,4))
+#natural
+plotRGB(trieste,r=3,g=2,b=1,stretch="Lin")
+plotRGB(trieste,r=3,g=2,b=1,stretch="hist")
+#r4,g3,b2
+plotRGB(trieste,r=4,g=3,b=2, stretch="Lin")
+plotRGB(trieste,r=4,g=3,b=2, stretch="hist")
+#r3,g4.b2
+plotRGB(trieste,r=3,g=4,b=2, stretch="Lin")
+plotRGB(trieste,r=3,g=4,b=2, stretch="hist")
+#r2,g2,b4
+plotRGB(trieste,r=3,g=2,b=4, stretch="Lin")
+plotRGB(trieste,r=3,g=2,b=4, stretch="hist")

@@ -4,6 +4,7 @@ library(raster)
 #recupero file esterno(in cartella lab)
 setwd("C:/lab/")
 #assegno nome a miei dati, ora interni a r, li carico con funzione BRICK
+#funzione brik serve a importare file con multilev visualizzandoli tuuti
 trieste<- brick("p224r63_2011_masked.grd")
 #funz plot (visualizza) di dati denominati
 plot(trieste)
@@ -101,3 +102,22 @@ plotRGB(trieste,r=3,g=4,b=2, stretch="hist")
 #r2,g2,b4
 plotRGB(trieste,r=3,g=2,b=4, stretch="Lin")
 plotRGB(trieste,r=3,g=2,b=4, stretch="hist")
+
+#now we charge anothewr file, the same zone but in 1988 (p224r63_1988.grd), same procedure of upstair( ps. note the descritpion of the file)
+#attivazione funz raster precedente,ente installta
+library(raster)
+#recupero file esterno(in cartella lab)
+setwd("C:/lab/")
+brick("p224r63_1988.grd")
+#now we charge also the immagine used befor, the one of 2011
+#we are going to see how work the multitemporal analysis
+brick("p224r63_2011.grd")
+#now we can see the information of both files, i rename it( per fare ordine)
+1988 <- brick("p224r63_1988_masked.grd")
+2011 <- brick("p224r63_2011_masked.grd")
+#function plotrgb on both the part of our multi temporal analysis (natural color, see line 66-68), i also use functin strech( line 67)
+plotRGB(1988, r=3, g=2, b=1, stretch="Lin")
+
+
+
+

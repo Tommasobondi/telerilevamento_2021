@@ -17,4 +17,20 @@ dev.off()
 quindici<-raster("lst_2015.tif")
 plot(quindici)
 dev.off()
-
+#comparison between all 4 datataset
+par(mfcol=c(2,2))
+plot(duemila)
+plot(cinque)
+plot(dieci)
+plot(quindici)
+#we crate a list of files, These functions produce a character vector of the names of files or directories in the named directory.
+#NB pattern "lst"n in this case, an optional regular expression. Only file names which match the regular expression will be returned.
+# use "" in list because you are taking foerm outside the r mambient
+list<-list.files(pattern="lst")
+list
+#functin lapply to apply a determiate function (uor case func. raster), on a detemrita obyect( vedi linee 26-30)
+import<-lapply(list,raster)
+#now i crate a single file from the 4 that i've imported, function stack, (import a list with functin lapply, then unify the 4 file in a new one)
+filenew<-stack(import)
+#i visualize the new object (filenew) with plot
+plot(filenew)

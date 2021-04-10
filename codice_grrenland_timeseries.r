@@ -1,6 +1,7 @@
 #now we test the changing of temperature in greenland year by year
-#same base functin of codice commentato in mine github
+#same base functin of codice commentato in mine github + rasterVis
 library(raster)
+library(rasterVis)
 setwd("C:/lab/greenland")
 #now we charge the datatset in R with function raster(diverso da codice precente, dove caricavo con brick), the i plot it to see every immagine charged with functin raster
 #remenber that raster is a kinde of immagine with raster indica la griglia ortogonale di punti che costituisce un'immagine raster. Nella grafica raster l'immagine viene
@@ -34,3 +35,34 @@ import<-lapply(list,raster)
 filenew<-stack(import)
 #i visualize the new object (filenew) with plot
 plot(filenew)
+#with function "levelplot" i assigne a unique legend to the entire block of pixel of the immagine (in uor case pix of col and row are pixel of long and lat)
+#es. levelplot of stacked immagine
+levelplot(filenew)
+#es. levelplot of single immagine
+levelplot(dieci)
+#function color ramp palette on levelplot (now col.regions, not "col")
+cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
+#es.
+levelplot(dieci, col.regions=cl)
+dev.off()
+#es.
+levelplot(filenew, col.regions=cl)
+dev.off()
+#change attribute's names 
+levelplot(filenew,col.regions=cl, names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+#change title of grafics
+levelplot(filenew,col.regions=cl, main="temperature change in time", names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+dev.off()
+#now we use melt data, same as above
+setwd("C:/lab/melt")
+melt<-list.files(pattern="annual")
+melt
+importmelt<-lapply(melt,raster)
+newmelt<-stack(importmelt)
+#wiew file charateristic
+newmelt
+levelplot(newmelt)
+dev.off()
+#mat operation between data matrix( a single immagine is a matrix were the singli pixel rapprent a value, in our case the melt)
+#stack function, we have to bond single immagine name with stack file ($)
+melt_amount <- newmelt$2007annual_melt.tif - newmelt$1979annual_melt.tif

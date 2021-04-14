@@ -1,0 +1,15 @@
+#how to visualize copoernicus data
+library(rasterVis)
+#ncdf4 useful to visualize .nc file format data
+library(ncdf4)
+setwd("c:/lab/copernicus/")
+#setted all the preliminary stuff, charge and visualize the dataset(use raster because i have only one layer)
+cry<-raster("cryosphere.nc")
+plot(cry)
+cl <- colorRampPalette(c('blue','light blue','green','red','yellow'))(100)
+plot(cry,col=cl)
+#ricampiono variabile originale, la rendo piu leggera
+#applico ricampionamento linerae, per ogni X pixel origianli creo 1 pixel nuovo con palore pari a media pixel originale
+#funz è aggregate, argomento oggetto da ricampionare e fact8 fattore di riduzione)
+cryricamp <- aggregate(cry, fact=100)
+plot(cryricamp, col=cl)

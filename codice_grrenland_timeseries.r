@@ -66,3 +66,4 @@ dev.off()
 #mat operation between data matrix( a single immagine is a matrix were the singli pixel rapprent a value, in our case the melt)
 #stack function, we have to bond single immagine name with stack file ($)
 melt_amount <- newmelt$2007annual_melt.tif - newmelt$1979annual_melt.tif
+dev.off()

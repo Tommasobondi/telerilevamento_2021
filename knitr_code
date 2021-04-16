@@ -1,0 +1,6 @@
+#knit r: report immagines and code on pdf, usual stuffto set the code(directory, packages)
+install.pakages("kintr")
+setwd("c:/lab/")
+library(knitr)
+
+

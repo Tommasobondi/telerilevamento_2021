@@ -1,0 +1,35 @@
+#setting wd code same as usual, active RStoolbox
+setwd("C:/lab/solar")
+library(raster)
+#RStoolbox useful to classificatio, "classificazione non supervisionata" -> the softwere decide the class( training set) by itself
+library(RStoolbox)
+#in windows pay attention to the formato of file during dowload, wd hide the format in the name and download it as .jpeg/ u need jpg
+#tonight take a look at package(sp) ->????
+so<-brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
+#visualize rgb lelevels, use all possibnle stretch
+plotRGB(so, 1,2,3, stretch="lin")
+#classification: functio "unsuperclass" contained in RStoolbox, to the definition take a look at Rmanual/argoument (file, n of Class)
+#NB, r is keysensitive
+soclass<-unsuperClass(so, nClasses=3)
+#we must plot the map, the obyet now that is classified is composed by many levels)
+#usue $ to bound theobject with map
+plot(soclass$map)
+#now we can visualize the three defined class
+#use function (set.seed)-> assigne a number to set randomized traing size
+#20class, associated wit colorramp palette
+cl <- colorRampPalette(c('yellow','red','black'))(100)
+soclasses<-unsuperClass(so, nClasses=20)
+plot(soclasses$map, col=cl)
+dev.off()
+#try with another immagine
+coron<-brick("suncorona.png")
+corona<-unsuperClass(coron, nClasses=3)
+plot(corona$map)
+#in order to check the accuracy of a map created with the classification you must do a groud-check
+dev.off()
+#now we use the grand canyon immagine
+gc<-brick("iss022e014078_087_lrg.jpg")
+#note the difference plot-plotRGB, is a multylevel immagine
+plotRGB(so, 1,2,3, stretch="lin")
+dev.off()
+plot(gc)

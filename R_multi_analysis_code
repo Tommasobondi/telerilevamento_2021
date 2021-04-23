@@ -1,0 +1,17 @@
+#take a look at the concept of statistic diversity and varyability
+setwd("C:/lab")
+library(raster)
+library(RStoolbox)
+#use functin brick, muklti set data ("raster" onli one set)
+jari<-brick("p224r63_2011_masked")
+#plot and visualize carateristich of immagine
+plot(jari)
+jari
+#now i plot only blue band and red band (to know the names tacke a look at imm.car.)/ in datafile i have 7 band
+#use $to bond band with its immagine, you can chang col with col=bxjcbaj, you can change pch (?), use argomument "cex" to enlarge the point dimension
+#the X,Y axys position of variable depend on the aroument's order (x first, y second)
+plot(jari$B1_sre, jari$B2_sre, pch=20)
+#to plot all the possible correlation of the dataset use the functin pairs
+#take a look at the matrix
+pairs(jari)
+

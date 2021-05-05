@@ -72,6 +72,7 @@ plot(copNDVI)
 copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
 plot(copNDVI)
 #In pack. rasterVis is conteined func. levelplot. Draw Level Plots and Contour plots. so we can see contour plots in the copNDVI layer contained in pack. rasterdiv
-#see
+#look at "greenland code" for more info on levelplot
 library(rasterVis)
 levelplot(copNDVI)
+

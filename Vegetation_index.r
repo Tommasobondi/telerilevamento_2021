@@ -63,4 +63,15 @@ plot(vegind1, col=cl)
 #time2
 vegind2<-spectralIndices (de2, green=3, red=2, nir=1)
 plot(vegind2, col=cl)
-
+#Diversity Indices for Numerical Matrices.Providing functions to calculate indices of diversity on numerical matrices based on information theory.
+install.packages("rasterdiv")
+library(rasterdiv)
+#In th package is included "copNDVI".A RasterLayer (EPSG: 4326) of the global average NDVI value per pixel for the 21st of June overthe period 1999-2017.
+plot(copNDVI)
+#in the packages i can also found the argoumenmt for reclasssifdicaton of the layer copNDVI. delete the water surface
+copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
+plot(copNDVI)
+#In pack. rasterVis is conteined func. levelplot. Draw Level Plots and Contour plots. so we can see contour plots in the copNDVI layer contained in pack. rasterdiv
+#see
+library(rasterVis)
+levelplot(copNDVI)

@@ -90,6 +90,7 @@ p1<-ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(st
 p2<-ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 #The grid package provides low-level functions to create graphical objects (grobs), and position them on a page in specific viewports
 #this pack is included in gridExtra
+#https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
 grid.arrange(p1, p2, nrow=1)
 
 

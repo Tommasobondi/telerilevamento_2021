@@ -38,3 +38,29 @@ plot(ndvi5, col=clsd)
 par(mfrow=c(1,2))
 plot(ndvi5, col=clsd)
 plot(ndvi3, col=clsd)
+#take a look at multi-an code
+#https://rdrr.io/cran/RStoolbox/man/rasterPCA.html
+#by mult.an we crate the pc1, and then we will apply the moving window for statistic index on the pc1
+#obviousli only the pc1 cant preserve all the information q, but it, by itselfes, can explain a lot of the variability
+sentPCA<-rasterPCA(sent)
+plot(sentPCA$map)
+#note that from the firs pca to the last one we gradually lose a q of information
+sentPCA
+#https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary
+#with function summary we can see how mutch the single component can explayn the variability (immagine it on a cartesan plan, how mutch the variabylity is distributed on the axis, original and component pc...)
+#the first pc contain 67,36804% of the origianl information
+summary(sentPCA$model)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

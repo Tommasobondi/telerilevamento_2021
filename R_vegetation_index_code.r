@@ -1,3 +1,4 @@
+#https://drive.google.com/drive/folders/1Vk6DTfo32ol-goRobIfX0x7Gg19tjthz
 library(raster)
 setwd("C:/lab/vege")
 de1<-brick("defor1.jpg")
@@ -53,7 +54,7 @@ plot(ndvidiff, col=cld, main="NDVI difference time1-time2")
 #par(mfrow=c(2,1))
 #plot(ndvidiff, col=cld, main="NDVI difference time1-time2")
 #plot(dvidiff, col=cld, main="DVI difference time1-time2")
-
+#https://www.rdocumentation.org/packages/RStoolbox/versions/0.2.6/topics/spectralIndices
 #in RStoolbox function "spectralIndices" to calcoulate vegetation index !!!!!!!!!
 library(RStoolbox)
 #in argoument i mus declare the band and the immagine that i want to elaborate (plot with colourramppalette cl)

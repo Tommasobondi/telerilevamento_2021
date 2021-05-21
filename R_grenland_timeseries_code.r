@@ -1,5 +1,6 @@
 #now we test the changing of temperature in greenland year by year
 #same base functin of codice commentato in mine github + rasterVis
+#https://cran.r-project.org/web/packages/rasterVis/rasterVis.pdf
 library(raster)
 library(rasterVis)
 setwd("C:/lab/greenland")
@@ -27,16 +28,21 @@ plot(quindici)
 #we crate a list of files, These functions produce a character vector of the names of files or directories in the named directory.
 #NB pattern "lst"n in this case, an optional regular expression. Only file names which match the regular expression will be returned.
 # use "" in list because you are taking foerm outside the r mambient
+#https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list.files
 list<-list.files(pattern="lst")
 list
 #functin lapply to apply a determiate function (uor case func. raster), on a detemrita obyect( vedi linee 26-30)
+#https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/lapply
 import<-lapply(list,raster)
 #now i crate a single file from the 4 that i've imported, function stack, (import a list with functin lapply, then unify the 4 file in a new one)
+#https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/stack
 filenew<-stack(import)
 #i visualize the new object (filenew) with plot
 plot(filenew)
 #with function "levelplot" i assigne a unique legend to the entire block of pixel of the immagine (in uor case pix of col and row are pixel of long and lat)
 #es. levelplot of stacked immagine
+#https://www.rdocumentation.org/packages/lattice/versions/0.10-10/topics/levelplot
+#https://www.r-graph-gallery.com/27-levelplot-with-lattice.html
 levelplot(filenew)
 #es. levelplot of single immagine
 levelplot(dieci)

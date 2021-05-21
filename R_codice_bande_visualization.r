@@ -1,14 +1,16 @@
-#dopoprovaseva
-#attivazione funz raster precedente,ente installta
+#funz raster activation
 library(raster)
 #recupero file esterno(in cartella lab)
 setwd("C:/lab/")
 #assegno nome a miei dati, ora interni a r, li carico con funzione BRICK
-#funzione brik serve a importare file con multilev visualizzandoli tuuti
+#funzione brick serve a importare file con multilev visualizzandoli tuuti
+#https://www.rdocumentation.org/packages/raster/versions/3.4-10/topics/brick
 trieste<- brick("p224r63_2011_masked.grd")
 #funz plot (visualizza) di dati denominati
+#https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/plot
 plot(trieste)
 #cambio di scala colori presntazioni dati
+#https://www.rdocumentation.org/packages/dichromat/versions/1.1/topics/colorRampPalette
 colorRampPalette(c("black","grey","light grey"))(100)
 cl<-colorRampPalette(c("black","grey","light grey"))(100)
 plot(trieste,col=cl)
@@ -22,7 +24,7 @@ plot(trieste,col=cl)
 #banda7=infrared medio
 #in order to visualize only one band->clean then current graph with dev.off
 dev.off()
-#in order to visualize only one band->tie up original immagine with the band that y want to visualize ($ simbnoloche lega)
+#in order to visualize only one band->tie up original immagine with the band that y want to visualize ($ simbnolo that bound)
 plot(trieste$B1_sre)
 #modify colours of immagine with colorrampplalette(comesopra)
 #con sequenza colori ustata prima(named CL)
@@ -33,6 +35,7 @@ plot(trieste$B1_sre,col=clo)
 #clean all with dev.off
 dev.off()
 #with "par" i structure the pattern of the new plot, in this case 2 band for graphics(what i visualize), structured in 1 row and 2 columns
+#https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/par
 par(mfrow=c(1,2))
 #now that i've structured the pattern of the graphics i camn plot wathever band i wont in it, in the limit of the stucture that i've decided wit the comand "par"
 plot(trieste$B1_sre)
@@ -65,6 +68,7 @@ plot(trieste$B3_sre, col=clred)
 plot(trieste$B4_sre,col=clnir)
 #with functio PLOTRBG i can create a multilayer raster based on the three visible band(blu, green, red)(word in our vision)
 #argoument stretch help the visualization of the band, by stretching the band alwyas in a range from 0 to 1
+#https://www.rdocumentation.org/packages/raster/versions/3.4-10/topics/plotRGB
 plotRGB(trieste,r=3,g=2,b=1,stretch="Lin")
 #change band in the three "position" allowed by rgb pattern. By using infared in red i can visualize this band, that i can't normally see)
 plotRGB(trieste,r=4,g=3,b=2, stretch="Lin")
@@ -104,7 +108,7 @@ plotRGB(trieste,r=3,g=2,b=4, stretch="Lin")
 plotRGB(trieste,r=3,g=2,b=4, stretch="hist")
 dev.off()
 #now we charge anothewr file, the same zone but in 1988 (p224r63_1988.grd), same procedure of upstair( ps. note the descritpion of the file)
-#attivazione funz raster precedente,ente installta
+#attivazione funz raster precedentemente installta
 library(raster)
 #recupero file esterno(in cartella lab)
 setwd("C:/lab/")

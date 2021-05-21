@@ -8,8 +8,8 @@ d1<-brick("defor1.jpg")
 #visualize info and plot
 d1
 plotRGB(d1, r=1, g=2, b=3, stretch="lin")
-#ggR: Plot single layer imagery in grey-scale. Can be used with any Raster* object -> 
-#ggRGB: Create ggplot2 Raster Plots with RGB from 3 RasterLayers
+#ggR: Plot single layer imagery in grey-scale. Can be used with any Raster* object -> https://www.rdocumentation.org/packages/RStoolbox/versions/0.2.6/topics/ggR
+#ggRGB: Create ggplot2 Raster Plots with RGB from 3 RasterLayers-> https://www.rdocumentation.org/packages/RStoolbox/versions/0.2.6/topics/ggRGB
 #Calculates RGB color composite raster for plotting with ggplot2. Optional values for clipping and and stretching can be used to enhance the imagery.
 ggRGB(d1, r = 1, g = 2, b = 3, stretch = "lin")
 dev.off()
@@ -21,7 +21,8 @@ par(mfrow=c(1,2))
 ggRGB(d1, r = 1, g = 2, b = 3, stretch = "lin")
 ggRGB(d2, r = 1, g = 2, b = 3, stretch = "lin")
 #note that classic function par don't work on ggRGB
-# function gridExtra: Miscellaneous Functions for "Grid" Graphics. 
+#pack gridExtra: Miscellaneous Functions for "Grid" Graphics.
+#https://cran.r-project.org/web/packages/gridExtra/gridExtra.pdf
 #Provides a number of user-level functions to work with "grid" graphics, notably to arrange multiple grid-based plots on a page, and draw tables.
 install.packages("gridExtra")
 library(gridExtra)
@@ -69,6 +70,7 @@ prop2 <- freq(d2c$map) / s2
 #dataset from the stat. count thata we had ceated
 #data.frame: function to creatate a dataframe
 #The function data.frame() creates data frames, tightly coupled collections of variables which share many of the properties of matrices and of lists, used as the fundamental data structure by most of R's modeling software.
+#https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame
 cover <- c("Forest","Agriculture")
 percent_1992 <- c(89.83, 10.16)
 percent_2006 <- c(52.06, 47.93)
@@ -76,9 +78,11 @@ percentages <- data.frame(cover, percent_1992, percent_2006)
 percentages
 #now plot the dataset
 #map calss to y istead x to flip 
+##https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
 ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(stat="identity", fill="white")
 ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 #now function grid.arrange
+#https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html (take a look!!!!!)
 cover <- c("Forest","Agriculture")
 percent_1992 <- c(89.83, 10.16)
 percent_2006 <- c(52.06, 47.93)
@@ -90,7 +94,6 @@ p1<-ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(st
 p2<-ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 #The grid package provides low-level functions to create graphical objects (grobs), and position them on a page in specific viewports
 #this pack is included in gridExtra
-#https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
 grid.arrange(p1, p2, nrow=1)
 
 

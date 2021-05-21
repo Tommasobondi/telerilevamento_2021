@@ -1,5 +1,5 @@
 #install.packages("viridis")
-#viridis is a pack useful for the manage of the colour - https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+#viridis is a pack useful for manage the colour (clour the ggplot graphs)- https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 library(raster)
 library(RStoolbox)
 library(ggplot2)
@@ -50,10 +50,55 @@ sentPCA
 #with function summary we can see how mutch the single component can explayn the variability (immagine it on a cartesan plan, how mutch the variabylity is distributed on the axis, original and component pc...)
 #the first pc contain 67,36804% of the origianl information
 summary(sentPCA$model)
-
-
-
-
+#the name of the model is sentPCA, is made by various component, inside "map" the first component is pc1
+pc1<-sentPCA$map$PC1
+#is already active the par
+pc1f<-focal(pc1, w=matrix(1/81, nrow=9, ncol=9), fun=sd)
+plot(pc1f, col=clsd)
+pc1f2<-focal(pc1, w=matrix(1/9, nrow=3, ncol=3), fun=sd)
+plot(pc1f2, col=clsd)
+#source function, allow to use (upload, so " ") line of code already wirtten
+#in this case i will test with file downloadable from virtulare page, download, C-lab-sim
+#https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/source
+#pay attention to the object, if the "source" code contains object denominated difference by the conde in witch you are actually working it could not work, you must pair the name
+#source("source_ggplot.r")
+#Error in eval(ei, envir) : object 'sentpca' not found -> correct the object's name
+sentpca<-rasterPCA(sent)
+source("source_ggplot.r")
+#https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+#https://www.rdocumentation.org/packages/ggplot2/versions/3.3.3
+#ggplot create a new window (like par function). How it work? it add blocks, you must define the geometry (function geom_line, geom_point)
+#in our case the dataset is a raster-> https://www.rdocumentation.org/packages/ggplot2/versions/0.9.0/topics/geom_raster
+#open window, raster geometry, file in argoument, mapping argoument(we must choose what we want to map)
+ggplot()+
+geom_raster(pc1f2, mapping=aes(x=x, y=y, fill=layer))
+dev.off()
+#note that with this combo(rsterPCa with focal(stand dev) and ggplot) is amaziong to map the geographicas variation of the diversiti of territory, in every context!!!!!!!!
+#viridis-The package contains eight color scales: “viridis”, the primary choice, and five alternatives with similar properties - “magma”, “plasma”, “inferno”, “civids”, “mako”, and “rocket” -, and a rainbow color map - “turbo”.
+#to change scale in argoument: option=magma for es.
+#to use a viridis' legend use function scale_fill_viridis (add funct with "+")
+ggplot() +
+geom_raster(pc1f2, mapping = aes(x = x, y = y, fill = layer)) +
+scale_fill_viridis()
+#to add title in ggplot funct "ggtitle"
+gp1<-ggplot() +
+geom_raster(pc1f2, mapping = aes(x = x, y = y, fill = layer)) +
+scale_fill_viridis()  +
+ggtitle("Standard deviation of PC1 by viridis colour scale")
+dev.off()
+gp2<-ggplot() +
+geom_raster(pc1f2, mapping = aes(x = x, y = y, fill = layer)) +
+scale_fill_viridis(option="inferno")  +
+ggtitle("Standard deviation of PC1 by inferno colour scale")
+dev.off()
+gp3<-ggplot() +
+geom_raster(pc1f2, mapping = aes(x = x, y = y, fill = layer)) +
+scale_fill_viridis(option="turbo")  +
+ggtitle("Standard deviation of PC1 by turbo colour scale")
+#now we have 3 map, with grid.arrange -https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
+grid.arrange(gp1, gp2, gp3, nrow=1)
+#amazing
+ 
 
 
 

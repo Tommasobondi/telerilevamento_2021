@@ -1,5 +1,6 @@
 #how to visualize copoernicus data
 #copernicus data shortcut in desktop
+#https://drive.google.com/drive/folders/1Vk6DTfo32ol-goRobIfX0x7Gg19tjthz
 library(rasterVis)
 #ncdf4 useful to visualize .nc file format data
 #https://cran.r-project.org/web/packages/ncdf4/ncdf4.pdf

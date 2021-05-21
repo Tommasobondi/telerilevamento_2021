@@ -2,7 +2,7 @@ library(raster)
 setwd("C:/lab/vege")
 de1<-brick("defor1.jpg")
 de2<-brick("defor2.jpg")
-#done the usual stuff, i plot the mimmagine
+#done the usual stuff, i plot the immagine
 #RGB immgine (pre  elaborated)( b1=Nir, b2=blue, b3= green)
 par(mfrow=c(2,1))
 plotRGB(de1, r=1, g=2, b=3, stretch="lin")

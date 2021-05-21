@@ -6,9 +6,9 @@ library(ggplot2)
 library(viridis)
 library(gridExtra)
 setwd("C:/lab/sim")
-#this immagine is a 3 band immagine (previously elaborated, so funct brick, to import the dataset, otherwise raster
+#this immagine is a 3 band immagine (previously elaborated, so funct brick, to import the dataset, otherwise raster)
 sent<-brick("sentinel.png")
-#is a rgb multileve-immagine - https://www.rdocumentation.org/packages/raster/versions/3.4-10/topics/plotRGB
+#is a rgb multilevel immagine - https://www.rdocumentation.org/packages/raster/versions/3.4-10/topics/plotRGB
 #we know that the sequence of layer (nir, green, blue) is already setted (nir=1, green=2, blue=3), so we can forget to wrote it in the argoument
 plotRGB(sent, stretch="lin")
 #standard deviation-by using only one band we calcoulate it, firt take a look at the immagine's data

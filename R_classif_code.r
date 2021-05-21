@@ -1,21 +1,25 @@
-#setting wd code same as usual, active RStoolbox
+#setting setwd code, same as usual, active RStoolbox
 setwd("C:/lab/solar")
 library(raster)
-#RStoolbox useful to classificatio, "classificazione non supervisionata" -> the softwere decide the class( training set) by itself
+#RStoolbox useful to classify, "classificazione non supervisionata" -> the softwere decide the class( training set) by itself
+#https://bleutner.github.io/RStoolbox/
 library(RStoolbox)
-#in windows pay attention to the formato of file during dowload, wd hide the format in the name and download it as .jpeg/ u need jpg
+#in windows pay attention to the format of file during dowload, wd hide the format in the name and download it as .jpeg/ u need jpg
 #tonight take a look at package(sp) ->????
 so<-brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
 #visualize rgb lelevels, use all possibnle stretch
+#https://www.rdocumentation.org/packages/raster/versions/3.4-10/topics/plotRGB
 plotRGB(so, 1,2,3, stretch="lin")
-#classification: functio "unsuperclass" contained in RStoolbox, to the definition take a look at Rmanual/argoument (file, n of Class)
+#classification: function "unsuperclass" contained in RStoolbox, to the definition take a look at Rmanual/argoument (file, n of Class)
 #NB, r is keysensitive
+#https://www.rdocumentation.org/packages/RStoolbox/versions/0.2.6/topics/unsuperClass
 soclass<-unsuperClass(so, nClasses=3)
 #we must plot the map, the obyet now that is classified is composed by many levels)
 #usue $ to bound theobject with map
 plot(soclass$map)
 #now we can visualize the three defined class
 #use function (set.seed)-> assigne a number to set randomized traing size
+#https://qastack.it/programming/13605271/reasons-for-using-the-set-seed-function
 #20class, associated wit colorramp palette
 cl <- colorRampPalette(c('yellow','red','black'))(100)
 soclasses<-unsuperClass(so, nClasses=20)

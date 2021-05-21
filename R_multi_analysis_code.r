@@ -18,6 +18,7 @@ pairs(jari)
 #with raster aggregate (resample) i unify near pixel in a avareg pixel with lower definition 8es. from 4 pixel i create 1 that rappresent a major portion of territory, >definition
 #is the same that you did in geospatial analysis, resample of v003
 #in argoument method of recampioning, immagine that pixel are going to be aggregate, factor of aggregatiion( every x pixel one new)
+#https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/aggregate
 jari_res<-aggregate(jari, fact=10)
 #take a look at the comparison, our pixel now rappresent 100m of territory, lower reolution( data and plot, plotted with plotRGB. stretch lin, natural)
 jari_res
@@ -29,6 +30,7 @@ dev.off()
 #RasterPCA,i create new compnent from two correalted, see the booknote/ the function crate a pca but also the map that explain the variability explicated by the various component
 jari_res_pca<-rasterPCA(jari_res)
 #function SUMMARY that give us a summary of our model, how and how much various band(variablex) expleain the model
+#https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary
 summary(jari_res_pca$model)
 #usual plot with obyect bounded with the relative model
 plot(jari_res_pca$map)

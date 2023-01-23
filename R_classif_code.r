@@ -5,7 +5,7 @@ library(raster)
 #https://bleutner.github.io/RStoolbox/
 library(RStoolbox)
 #in windows pay attention to the format of file during dowload, wd hide the format in the name and download it as .jpeg/ u need jpg
-#tonight take a look at package(sp) ->????
+#tonight take a look at package(sp) -> https://cran.r-project.org/web/packages/sp/index.html
 so<-brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
 #visualize rgb lelevels, use all possibnle stretch
 #https://www.rdocumentation.org/packages/raster/versions/3.4-10/topics/plotRGB

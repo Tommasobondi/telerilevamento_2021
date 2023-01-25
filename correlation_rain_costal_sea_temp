@@ -18,3 +18,63 @@ ggplot(data, aes(x = temperature, y = precipitation)) +
 # calcolare la correlazione tra le due variabili
 correlation <- cor(data$temperature, data$precipitation)
 print(correlation)
+
+coi dati georefenziati
+# importare i pacchetti necessari
+library(raster)
+library(rgdal)
+library(ggplot2)
+library(dplyr)
+
+# importare i dati delle temperature del Mediterraneo come mappa raster
+temperatures_raster <- raster("temperatures.tif")
+
+# importare i dati delle precipitazioni come mappa raster
+precipitations_raster <- raster("precipitations.tif")
+
+# unire i due dataset in un unico dataframe
+temperature_data <- as.data.frame(temperatures_raster)
+precipitation_data <- as.data.frame(precipitations_raster)
+
+data <- left_join(temperature_data, precipitation_data, by = "date")
+
+# visualizzare i dati utilizzando un mapa di calore
+ggplot(data) +
+  geom_tile(aes(x = x, y = y, fill = temperature)) +
+  scale_fill_gradient(low = "blue", high = "red") +
+  geom_point(data = data, aes(x = lon, y = lat, size = precipitation))
+
+# calcolare la correlazione tra le due variabili
+correlation <- cor(data$temperature, data$precipitation)
+print(correlation)
+
+
+analisi su serie storiche utilizzando dataset come mappe raster
+# importare i pacchetti necessari
+library(raster)
+library(dplyr)
+library(ggplot2)
+
+# importare i dati delle temperature del Mediterraneo come mappa raster
+temperatures_raster <- stack("temperatures.tif")
+
+# importare i dati delle precipitazioni come mappa raster
+precipitations_raster <- stack("precipitations.tif")
+
+# filtrare i dati in base alla data
+start_date <- "2010-01-01"
+end_date <- "2020-12-31"
+temperatures_subset <- subset(temperatures_raster, temperatures_raster@date >= start_date & temperatures_raster@date <= end_date)
+precipitations_subset <- subset(precipitations_raster, precipitations_raster@date >= start_date & precipitations_raster@date <= end_date)
+
+# creare una serie di mappe animate per visualizzare l'evoluzione nel tempo
+animation <- animate(temperatures_subset, precipitations_subset)
+
+# calcolare la correlazione tra le due variabili per ogni data
+correlations <- sapply(1:nlayers(temperatures_subset), function(i) {
+  cor(temperatures_subset[[i]], precipitations_subset[[i]])
+})
+
+# visualizzare la serie di correlazioni nel tempo
+ggplot(data.frame(date = temperatures_subset@date, correlation = correlations)) +
+  geom_line(aes(x = date, y = correlation

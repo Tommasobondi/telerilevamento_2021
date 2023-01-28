@@ -1,0 +1,41 @@
+library(raster)
+library(rgdal)
+library(lattice)
+library(rasterVis)
+
+# Imposta il percorso delle bande
+#path to folder
+folder <- "C:\\tel21\\S2B_MSIL1C_20230107T090249_N0509_R007_T35SMD_20230107T093527.SAFE\\GRANULE\\L1C_T35SMD_A030492_20230107T090326\\IMG_DATA\\"
+
+# Importa tutte le bande in una lista
+bands <- list.files(folder, pattern = "*.jp2$", full.names = TRUE)
+
+# Legge le bande con risoluzione originale
+rasters <- lapply(bands, raster)
+
+#-->ciclo for per scorrere attraverso la lista di bande e applicare la funzione resample ad ogni banda singolarmente
+rasters_resampled <- list()
+for (i in 1:length(rasters)) {
+  rasters_resampled[[i]] <- resample(rasters[[i]], rasters[[1]], res = 10)
+}
+
+# Unisce tutte le bande in un unico file raster
+#salva il raster multispettrale a 12 bande + tci
+raster_brick <- brick(rasters_resampled)
+writeRaster(raster_brick, filename = "C:\\tel21\\data_ok\\lesvos_date.tif", format = "GTiff")
+#controllo buona riuscita
+#a <- brick("C:\\tel21\\lesvos_date.tif")
+#plot(a)
+
+#upload raster multispettrale, applica maschera
+
+mask_shapefile <- readOGR("C:\\tel21\\ROI\\ROI_LES.shp")
+raster_multispectral <- brick("C:\\tel21\\data_ok\\lesvos_date.tif")
+masked_raster_date <- mask(raster_multispectral, mask_shapefile)
+plot(masked_raster_date)
+writeRaster(masked_raster_date, filename = "C:\\tel21\\data_ok\\lesvos_date.tif", format = "GTiff")
+#verifica riuscita
+#print(a)
+
+
+

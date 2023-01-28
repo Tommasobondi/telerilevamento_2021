@@ -27,6 +27,9 @@ rasters_stack <- stack(rasters_resampled)
 #indice di copertura del suolo urbano (UCI)
 #UCI = (B4-B8)/(B4+B8)
 
+#visualizzare tutte benade
+raster::plot(rasters_stack,col=terrain.colors(255))
+
 uci <- (rasters_resampled[[4]] - rasters_resampled[[8]]) / (rasters_resampled[[4]] + rasters_resampled[[8]])
 
 # Calcolo l'NDVI

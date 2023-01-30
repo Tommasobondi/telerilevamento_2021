@@ -4,8 +4,8 @@ library(scales)
 
 #path to folder
 
-folder <- "phat\\to\\jp2\\bands"
-final_prod_name <- "C:\\tel21\\data_ok\\***.tif"
+folder <- "C:\\tel21\\S2A_MSIL1C_20160816T090022_N0204_R007_T35SMD_20160816T090444.SAFE\\GRANULE\\L1C_T35SMD_A006010_20160816T090444\\IMG_DATA\\"
+final_prod_name <- "C:\\tel21\\data_ok\\prova.tif"
 
 # Importa tutte le bande in una lista
 
@@ -38,7 +38,8 @@ masked_crop <- crop(masked_raster, mask_shapefile)
 
 masked_crop_norm <- (masked_crop-min(masked_crop))/(max(masked_crop)-min(masked_crop))
 names(masked_crop_norm) <- c("B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B8A", "B9", "B10", "B11", "B12")
-writeRaster(masked_crop_norm, filename = final_prod_name, format = "GTiff")
+a <- names(masked_crop_norm)
+writeRaster(a, filename = final_prod_name, format = "GTiff")
 
 #verifica riuscita
 print(masked_crop_norm)

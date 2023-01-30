@@ -1,12 +1,11 @@
 library(raster)
 library(rgdal)
-library(lattice)
-library(rasterVis)
 library(scales)
 
 #path to folder
 
-folder <- "C:\\tel21\\S2B_MSIL1C_20220820T085559_N0400_R007_T35SMD_20220820T094719.SAFE\\GRANULE\\L1C_T35SMD_A028490_20220820T090237\\IMG_DATA\\"
+folder <- "C:\\tel21\\S2B_MSIL1C_20230107T090249_N0509_R007_T35SMD_20230107T093527.SAFE\\GRANULE\\L1C_T35SMD_A030492_20230107T090326\\IMG_DATA\\"
+final_prod_name <- "C:\\tel21\\data_ok\\2023_w.tif"
 
 # Importa tutte le bande in una lista
 
@@ -20,14 +19,14 @@ rasters <- lapply(bands, raster)
 
 rasters_resampled <- list()
 for (i in 1:length(rasters)) {
-  rasters_resampled[[i]] <- resample(rasters[[i]], rasters[[1]], res = 10)
+  rasters_resampled[[i]] <- resample(rasters[[i]], rasters[[3]], res = 10)
 }
 
 # Unisce tutte le bande in un unico file raster
 
 raster_brick <- brick(rasters_resampled)
 
-#upload raster multispettrale, applica maschera, crop su no useful part
+#upload raster maskera, applica maschera, crop su no useful part
 
 mask_shapefile <- readOGR("C:\\tel21\\ROI\\ROI_LES.shp")
 masked_raster <- mask(raster_brick , mask_shapefile)
@@ -37,7 +36,7 @@ masked_crop <- crop(masked_raster, mask_shapefile)
 #salvati prodotti pronti a uso
 
 masked_crop_norm <- (masked_crop-min(masked_crop))/(max(masked_crop)-min(masked_crop))
-writeRaster(masked_crop_norm, filename = "C:\\tel21\\data_ok\\2022_s.tif", format = "GTiff")
+writeRaster(masked_crop_norm, filename = final_prod_name, format = "GTiff")
 
 #verifica riuscita
 print(masked_crop_norm)
@@ -45,37 +44,4 @@ plot(masked_crop_norm)
 
 
 
-normalize_sentinel <- function(sentinel_folder, mask_shapefile) {
-  # Legge le bande con risoluzione originale
-  bands <- list.files(sentinel_folder, pattern = "*.jp2$", full.names = TRUE)
-  rasters <- lapply(bands, raster)
 
-  #-->ciclo for per scorrere attraverso la lista di bande e applicare la funzione resample ad ogni banda singolarmente
-  rasters_resampled <- list()
-  for (i in 1:length(rasters)) {
-    rasters_resampled[[i]] <- resample(rasters[[i]], rasters[[1]], res = 10)
-  }
-
-  # Unisce tutte le bande in un unico file raster
-  raster_brick <- brick(rasters_resampled)
-
-  #upload raster multispettrale, applica maschera, crop su no useful part
-  masked_raster <- mask(raster_brick , mask_shapefile)
-  masked_crop <- crop(masked_raster, mask_shapefile)
-
-  #n normalizza valori rifl band tra 0 e 1  
-  #salvati prodotti pronti a uso
-  masked_crop_norm <- (masked_crop-min(masked_crop))/(max(masked_crop)-min(masked_crop))
-  writeRaster(masked_crop_norm, filename = paste0("C:\\tel21\\data_ok\\",Sys.Date(),"_s.tif"), format = "GTiff")
-
-}
-
-sentinel_folders <- c("C:\\tel21\\S2B_MSIL1C_20220820T085559_N0400_R007_T35SMD_20220820T094719.SAFE",
-                      "C:\\tel21\\S2B_MSIL1C_20221010T085559_N0400_R007_T35SMD_20221010T094719.SAFE",
-                      "C:\\tel21\\S2B_MSIL1C_20221110T085559_N0400_R007_T35SMD_20221110T094719.SAFE")
-
-mask_shapefile <- "C:\\tel21\\ROI\\ROI_LES.shp"
-
-for (folder in sentinel_folders) {
-  normalize_sentinel(folder, mask_shapefile)
-}

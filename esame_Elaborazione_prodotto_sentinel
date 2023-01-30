@@ -4,8 +4,8 @@ library(scales)
 
 #path to folder
 
-folder <- "C:\\tel21\\S2B_MSIL1C_20230107T090249_N0509_R007_T35SMD_20230107T093527.SAFE\\GRANULE\\L1C_T35SMD_A030492_20230107T090326\\IMG_DATA\\"
-final_prod_name <- "C:\\tel21\\data_ok\\2023_w.tif"
+folder <- "phat\\to\\jp2\\bands"
+final_prod_name <- "C:\\tel21\\data_ok\\***.tif"
 
 # Importa tutte le bande in una lista
 
@@ -16,10 +16,11 @@ bands <- list.files(folder, pattern = "*.jp2$", full.names = TRUE)
 rasters <- lapply(bands, raster)
 
 #-->ciclo for per scorrere attraverso la lista di bande e applicare la funzione resample ad ogni banda singolarmente
+#20m, band 7 
 
 rasters_resampled <- list()
 for (i in 1:length(rasters)) {
-  rasters_resampled[[i]] <- resample(rasters[[i]], rasters[[3]], res = 10)
+  rasters_resampled[[i]] <- resample(rasters[[i]], rasters[[7]])
 }
 
 # Unisce tutte le bande in un unico file raster
@@ -36,6 +37,7 @@ masked_crop <- crop(masked_raster, mask_shapefile)
 #salvati prodotti pronti a uso
 
 masked_crop_norm <- (masked_crop-min(masked_crop))/(max(masked_crop)-min(masked_crop))
+names(masked_crop_norm) <- c("B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B8A", "B9", "B10", "B11", "B12")
 writeRaster(masked_crop_norm, filename = final_prod_name, format = "GTiff")
 
 #verifica riuscita

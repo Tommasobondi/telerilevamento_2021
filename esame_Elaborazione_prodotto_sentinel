@@ -4,8 +4,8 @@ library(scales)
 
 #path to folder
 
-folder <- "C:\\tel21\\S2A_MSIL1C_20160816T090022_N0204_R007_T35SMD_20160816T090444.SAFE\\GRANULE\\L1C_T35SMD_A006010_20160816T090444\\IMG_DATA\\"
-final_prod_name <- "C:\\tel21\\data_ok\\prova.tif"
+folder <- "phat\\to\\sentinel\\folder\\"
+final_prod_name <- "C:\\tel21\\data_ok\\*name*.tif"
 
 # Importa tutte le bande in una lista
 

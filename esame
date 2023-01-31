@@ -1,0 +1,74 @@
+# Load packages
+library(raster)
+library(rasterVis)
+
+# setwd
+setwd("C:\\tel21\\data_ok\\")
+
+#load product
+winter22<-brick("2023_w.tif")
+winter19<-brick("2019_w.tif")
+winter16<-brick("2016_w.tif")
+summer16<-brick("2016_s.tif")
+summer19<-brick("2019_s.tif")
+summer22<-brick("2022_s.tif")
+
+# Plot the images in par, set borders
+par(mfrow=c(3,2),oma=c(0,2,4,0))
+plotRGB(winter16, r=12, g=8, b=4, stretch="lin")
+plotRGB(summer16, r=12, g=8, b=4, stretch="lin")
+plotRGB(winter19, r=12, g=8, b=4, stretch="lin")
+plotRGB(summer19, r=12, g=8, b=4, stretch="lin")
+plotRGB(winter22, r=12, g=8, b=4, stretch="lin")
+plotRGB(summer22, r=12, g=8, b=4, stretch="lin")
+
+#give title to immages and subplots
+mtext("winter-summer Short-Wave Infrared variation",side=3,line=2,outer=TRUE)
+mtext("WINTER - SUMMER",side=3,line=0,outer=TRUE)
+mtext("2022 - 2019 - 2016",side=2,line=0,outer=TRUE)
+
+#NDVI -> vegetation index is good for quantifying the amount of vegetation.
+#While high values suggest dense canopy, low or negative values indicate urban and water features
+#Vegetation Index (B8-B4)/(B8+B4)
+# NDVI = (NIR — RED) / (NIR + RED)
+
+# ndvi function
+ndvi<-function(b){
+  ndvi<-(b[[8]]-b[[4]])/(b[[8]]+b[[4]])
+  return(ndvi)
+}
+
+#NDVI
+ndvi_w22<-ndvi(winter22)
+ndvi_w19<-ndvi(winter19)
+ndvi_w16<-ndvi(winter16)
+ndvi_s16<-ndvi(summer16)
+ndvi_s19<-ndvi(summer19)
+ndvi_s22<-ndvi(summer22)
+
+
+#Moisture Index = (NIR- SWIR)/(NIR+SWIR)
+#Moisture Index (B8A-B11)/(B8A+B11)
+
+# moisture index function
+mi<-function(b){
+  mi<-(b[[8]]-b[[11]])/(b[[8]]+b[[11]])
+  return(mi)
+}
+
+#MI -> moisture index is ideal for finding water stress in plants. It uses the short-wave and near-infrared to generate an index of moisture content. 
+#In general, wetter vegetation has higher values. But lower moisture index values suggest plants are under stress from insufficient moisture.
+# moisture index winter22
+mi_w22<-mi(winter22)
+mi_w19<-mi(winter19)
+mi_w16<-mi(winter16)
+mi_s16<-mi(summer16)
+mi_s19<-mi(summer19)
+mi_s22<-mi(summer22)
+
+#annual variaton of ndvi
+var16_ndvi <- ndvi_w16 - ndvi_s16
+var19_ndvi <- ndvi_w19 - ndvi_s19
+var22_ndvi <- ndvi_w22 - ndvi_s22
+list_ndvi <- list.files(pattern="var")
+ndvi_var <- stack(list_ndvi)

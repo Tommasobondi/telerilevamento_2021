@@ -46,6 +46,19 @@ ndvi_s16<-ndvi(summer16)
 ndvi_s19<-ndvi(summer19)
 ndvi_s22<-ndvi(summer22)
 
+#annual variaton of ndvi
+var16_ndvi <- ndvi_w16 - ndvi_s16
+var19_ndvi <- ndvi_w19 - ndvi_s19
+var22_ndvi <- ndvi_w22 - ndvi_s22
+list_ndvi_var <- list(var16_ndvi, var19_ndvi, var22_ndvi)
+ndvi_var <- stack(list_ndvi_var)
+
+#annual avarage ndvi
+a16-ndvi <- (ndvi_w16 + ndvi_s16)/2
+a19-ndvi <- (ndvi_w19 + ndvi_s19)/2
+a22-ndvi <- (ndvi_w22 + ndvi_s22)/2
+list_ndvi_a <- list(a16_ndvi, a19_ndvi, a22_ndvi)
+ndvi_a <- stack(list_ndvi_a)
 
 #Moisture Index = (NIR- SWIR)/(NIR+SWIR)
 #Moisture Index (B8A-B11)/(B8A+B11)
@@ -66,9 +79,16 @@ mi_s16<-mi(summer16)
 mi_s19<-mi(summer19)
 mi_s22<-mi(summer22)
 
-#annual variaton of ndvi
-var16_ndvi <- ndvi_w16 - ndvi_s16
-var19_ndvi <- ndvi_w19 - ndvi_s19
-var22_ndvi <- ndvi_w22 - ndvi_s22
-list_ndvi <- list.files(pattern="var")
-ndvi_var <- stack(list_ndvi)
+#annual variaton of moisture index
+var16_mi <- mi_w16 - mi_s16
+var19_mi <- mi_w19 - mi_s19
+var22_mi <- mi_w22 - mi_s22
+list_mi_var <- list(var16_mi, var19_mi, var22_mi)
+mi_var <- stack(list_mi_var)
+
+#annual avarage moisture index
+a16_mi <- (ndvi_w16 + ndvi_s16)/2
+a19_mi <- (ndvi_w19 + ndvi_s19)/2
+a22_mi <- (ndvi_w22 + ndvi_s22)/2
+list_mi_av <- list(a16_mi, a19_mi, a22_mi)
+mi_var <- stack(list_mi_av)

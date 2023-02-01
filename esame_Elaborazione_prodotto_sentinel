@@ -2,40 +2,26 @@ library(raster)
 library(rgdal)
 library(scales)
 
-#path to folder
-
+#setting the variables: path to folder and final_prod_name
 folder <- "phat\\to\\sentinel\\folder\\"
 final_prod_name <- "C:\\tel21\\data_ok\\*name*.tif"
-
 # Importa tutte le bande in una lista
-
 bands <- list.files(folder, pattern = "*.jp2$", full.names = TRUE)
-
 # Legge le bande con risoluzione originale
-
 rasters <- lapply(bands, raster)
-
-#-->ciclo for per scorrere attraverso la lista di bande e applicare la funzione resample ad ogni banda singolarmente
-#20m, band 7 
-
+#ciclo for per scorrere attraverso la lista di bande e applicare la funzione resample ad ogni banda singolarmente (su band7, 20m)
 rasters_resampled <- list()
 for (i in 1:length(rasters)) {
   rasters_resampled[[i]] <- resample(rasters[[i]], rasters[[7]])
 }
-
-# Unisce tutte le bande in un unico file raster
-
+# Brick per unire i resample in un unico file raster
 raster_brick <- brick(rasters_resampled)
-
 #upload raster maskera, applica maschera, crop su no useful part
-
 mask_shapefile <- readOGR("C:\\tel21\\ROI\\ROI_LES.shp")
 masked_raster <- mask(raster_brick , mask_shapefile)
 masked_crop <- crop(masked_raster, mask_shapefile)
-
 #n normalizza valori rifl band tra 0 e 1  
 #salvati prodotti pronti a uso
-
 masked_crop_norm <- (masked_crop-min(masked_crop))/(max(masked_crop)-min(masked_crop))
 names(masked_crop_norm) <- c("B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B8A", "B9", "B10", "B11", "B12")
 a <- names(masked_crop_norm)

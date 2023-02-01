@@ -52,7 +52,7 @@ var19_ndvi <- ndvi_w19 - ndvi_s19
 var22_ndvi <- ndvi_w22 - ndvi_s22
 list_ndvi_var <- list(var16_ndvi, var19_ndvi, var22_ndvi)
 ndvi_var <- stack(list_ndvi_var)
-
+writeRaster(ndvi_var, filename = "ndvi_annual_variation", format = "GTiff")
 
 
 #annual avarage ndvi
@@ -61,7 +61,7 @@ a19-ndvi <- (ndvi_w19 + ndvi_s19)/2
 a22-ndvi <- (ndvi_w22 + ndvi_s22)/2
 list_ndvi_a <- list(a16_ndvi, a19_ndvi, a22_ndvi)
 ndvi_a <- stack(list_ndvi_a)
-
+writeRaster(ndvi_a, filename = "NDVI_annual_avarage", format = "GTiff")
 
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(200)
 levelplot(TGr,col.regions=cl, main="LST variation in time",
@@ -92,14 +92,15 @@ var19_mi <- mi_w19 - mi_s19
 var22_mi <- mi_w22 - mi_s22
 list_mi_var <- list(var16_mi, var19_mi, var22_mi)
 mi_var <- stack(list_mi_var)
+writeRaster(mi_var, filename = "MI_annual_variation", format = "GTiff")
 
 #annual avarage moisture index
 a16_mi <- (ndvi_w16 + ndvi_s16)/2
 a19_mi <- (ndvi_w19 + ndvi_s19)/2
 a22_mi <- (ndvi_w22 + ndvi_s22)/2
 list_mi_av <- list(a16_mi, a19_mi, a22_mi)
-mi_var <- stack(list_mi_av)
-
+mi_av <- stack(list_mi_av)
+writeRaster(mi_av, filename = "MI_annual_av", format = "GTiff")
 
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(200)
 levelplot(Annual variationtimeseries,col.regions=cl, main="LST variation in time",

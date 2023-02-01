@@ -59,8 +59,8 @@ text(x = 0.5, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var
 #2022
 cor22 <- stack(MIsesonal$varmi2022, NDVIsesonal$varndvi2022)
 
-ex_cor16_mi <-(cor16$varmi2022)
-ex_cor16_ndvi <-(cor16$varndvi2022)
+ex_cor22_mi <-(cor22$varmi2022)
+ex_cor22_ndvi <-(cor22$varndvi2022)
 
 # Check for missing values and remove it ->look at stackoverflow
 any_missing <- is.na(ex_cor22_mi) | is.na(ex_cor22_ndvi)

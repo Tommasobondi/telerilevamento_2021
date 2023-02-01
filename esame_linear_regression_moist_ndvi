@@ -1,0 +1,77 @@
+library(raster)
+
+setwd("C:\\tel21\\data_ok\\")
+
+ndvi <- brick("NDVI_annual_av.tif")
+names(ndvi) <- c("n2016", "n2019", "n2022")
+
+mi <- brick("MI_annual_av.tif")
+names(mi) <- c("m2016", "m2019", "m2022")
+
+MIsesonal <- brick("MI_annual_variation.tif")
+names(MIsesonal) <- c("varmi2016", "varmi2019", "varmi2022")
+
+NDVIsesonal <- brick("ndvi_annual_variation.tif")
+names(NDVIsesonal) <- c("varndvi2016", "varndvi2019", "varndvi2022")
+
+#2016
+cor16 <- stack(MIsesonal$varmi2016, NDVIsesonal$varndvi2016)
+
+ex_cor16_mi <-(cor16$varmi2016)
+ex_cor16_ndvi <-(cor16$varndvi2016)
+
+# Check for missing values and remove it ->look at stackoverflow
+any_missing <- is.na(ex_cor16_mi) | is.na(ex_cor16_ndvi)
+ex_cor16_mi_no_na <- ex_cor16_mi[!any_missing]
+ex_cor16_ndvi_no_na <- ex_cor16_ndvi[!any_missing]
+
+# linear model
+model_ses_var <- lm(ex_cor16_mi_no_na ~ ex_cor16_ndvi_no_na)
+
+# Plot the model
+plot(ex_cor16_ndvi_no_na, ex_cor16_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2016", xlab="NDVI seasonal variation", ylab="MI seasonal variation")
+abline(model_ses_var, col="red")
+summary(model_ses_var)
+text(x = 1, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))
+              
+
+#2019
+cor19 <- stack(MIsesonal$varmi2019, NDVIsesonal$varndvi2019)
+
+ex_cor16_mi <-(cor16$varmi2019)
+ex_cor16_ndvi <-(cor16$varndvi2019)
+
+# Check for missing values and remove it ->look at stackoverflow
+any_missing <- is.na(ex_cor19_mi) | is.na(ex_cor19_ndvi)
+ex_cor19_mi_no_na <- ex_cor19_mi[!any_missing]
+ex_cor19_ndvi_no_na <- ex_cor19_ndvi[!any_missing]
+
+# linear model
+model_ses_var <- lm(ex_cor19_mi_no_na ~ ex_cor19_ndvi_no_na)
+
+# Plot the model
+plot(ex_cor19_ndvi_no_na, ex_cor19_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2019", xlab="NDVI seasonal variation", ylab="MI seasonal variation")
+abline(model_ses_var, col="red")
+summary(model_ses_var)
+text(x = 1, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))
+
+
+#2022
+cor22 <- stack(MIsesonal$varmi2022, NDVIsesonal$varndvi2022)
+
+ex_cor16_mi <-(cor16$varmi2022)
+ex_cor16_ndvi <-(cor16$varndvi2022)
+
+# Check for missing values and remove it ->look at stackoverflow
+any_missing <- is.na(ex_cor22_mi) | is.na(ex_cor22_ndvi)
+ex_cor22_mi_no_na <- ex_cor22_mi[!any_missing]
+ex_cor22_ndvi_no_na <- ex_cor19_ndvi[!any_missing]
+
+# linear model
+model_ses_var <- lm(ex_cor22_mi_no_na ~ ex_cor22_ndvi_no_na)
+
+# Plot the model
+plot(ex_cor22_ndvi_no_na, ex_cor22_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2022", xlab="NDVI seasonal variation", ylab="MI seasonal variation")
+abline(model_ses_var, col="red")
+summary(model_ses_var)
+text(x = 1, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))

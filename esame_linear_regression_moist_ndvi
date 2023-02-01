@@ -20,16 +20,20 @@ cor16 <- stack(MIsesonal$varmi2016, NDVIsesonal$varndvi2016)
 ex_cor16_mi <-(cor16$varmi2016)
 ex_cor16_ndvi <-(cor16$varndvi2016)
 
-# Check for missing values and remove it ->look at stackoverflow
+# checks for missing values in the data by using the "is.na" function and remove in both ->look at stackoverflow
+#"|" operator is used to perform an element-wise OR operation between two logical vectors
+#"is.na" function checks each element of the input vector and returns a logical vector indicating whether the corresponding element is missing or not
+result of the OR operation between two logical vectors is also a logical vector, where the value of each corrisponding element is true
 any_missing <- is.na(ex_cor16_mi) | is.na(ex_cor16_ndvi)
 ex_cor16_mi_no_na <- ex_cor16_mi[!any_missing]
 ex_cor16_ndvi_no_na <- ex_cor16_ndvi[!any_missing]
 
-# linear model
-model_ses_var <- lm(ex_cor16_mi_no_na ~ ex_cor16_ndvi_no_na)
+#linear regression model between seasonal variation in NDVI and MI
+model_ses_var <- lm(ex_cor16_ndvi_no_na ~ ex_cor16_mi_no_na)
 
-# Plot the model
-plot(ex_cor16_ndvi_no_na, ex_cor16_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2016", xlab="NDVI seasonal variation", ylab="MI seasonal variation")
+# Plot of the relationship between the two variables, adding the regression line in red and displaying the R-squared value on the plot.
+#dependent variable is the seasonal variation in NDVI
+plot(ex_cor16_ndvi_no_na, ex_cor16_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2016", xlab="NDMI seasonal variation", ylab="NDVI seasonal variation")
 abline(model_ses_var, col="red")
 summary(model_ses_var)
 text(x = 1, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))
@@ -46,11 +50,11 @@ any_missing <- is.na(ex_cor19_mi) | is.na(ex_cor19_ndvi)
 ex_cor19_mi_no_na <- ex_cor19_mi[!any_missing]
 ex_cor19_ndvi_no_na <- ex_cor19_ndvi[!any_missing]
 
-# linear model
-model_ses_var <- lm(ex_cor19_mi_no_na ~ ex_cor19_ndvi_no_na)
+# linear regression model between seasonal variation in NDVI and MI
+model_ses_var <- lm(ex_cor19_ndvi_no_na ~ ex_cor19_mi_no_na)
 
 # Plot the model
-plot(ex_cor19_ndvi_no_na, ex_cor19_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2019", xlab="NDVI seasonal variation", ylab="MI seasonal variation")
+plot(ex_cor19_ndvi_no_na, ex_cor19_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2019", xlab="NDMI seasonal variation", ylab="NDVI seasonal variation")
 abline(model_ses_var, col="red")
 summary(model_ses_var)
 text(x = 0.5, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))
@@ -68,10 +72,10 @@ ex_cor22_mi_no_na <- ex_cor22_mi[!any_missing]
 ex_cor22_ndvi_no_na <- ex_cor19_ndvi[!any_missing]
 
 # linear model
-model_ses_var <- lm(ex_cor22_mi_no_na ~ ex_cor22_ndvi_no_na)
+model_ses_var <- lm(ex_cor22_ndvi_no_na ~ ex_cor22_mi_no_na)
 
 # Plot the model
-plot(ex_cor22_ndvi_no_na, ex_cor22_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2022", xlab="NDVI seasonal variation", ylab="MI seasonal variation")
+plot(ex_cor22_ndvi_no_na, ex_cor22_mi_no_na, main="Relationship between MI and NDVI seasonal variation 2022", xlab="NDMI seasonal variation", ylab="NDVI seasonal variation")
 abline(model_ses_var, col="red")
 summary(model_ses_var)
 text(x = 0.5, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))

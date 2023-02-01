@@ -58,9 +58,9 @@ cl <- colorRampPalette(c("blue","light blue","pink","red"))(200)
 levelplot(ndvi_var,col.regions=cl, main="NDVI sesonal variation time series", names.attr=c("2016","2019","2022"))
 
 #annual avarage ndvi
-a16-ndvi <- (ndvi_w16 + ndvi_s16)/2
-a19-ndvi <- (ndvi_w19 + ndvi_s19)/2
-a22-ndvi <- (ndvi_w22 + ndvi_s22)/2
+a16_ndvi <- (ndvi_w16 + ndvi_s16)/2
+a19_ndvi <- (ndvi_w19 + ndvi_s19)/2
+a22_ndvi <- (ndvi_w22 + ndvi_s22)/2
 list_ndvi_a <- list(a16_ndvi, a19_ndvi, a22_ndvi)
 ndvi_a <- stack(list_ndvi_a)
 writeRaster(ndvi_a, filename = "NDVI_annual_avarage", format = "GTiff")

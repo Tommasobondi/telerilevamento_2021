@@ -3,6 +3,8 @@ library(rgdal)
 library(scales)
 library(rasterVis)
 
+setwd("C:\\tel21\\data_ok")
+
 #setting the variables: path to folder and final_prod_name
 folder <- "phat\\to\\forder\\"
 final_prod_name <- "C:\\tel21\\data_ok\\**.tif"

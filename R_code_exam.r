@@ -37,6 +37,7 @@ writeRaster(a, filename = final_prod_name.tif, format = "GTiff")
 #verifica riuscita
 print(masked_crop_norm)
 plot(masked_crop_norm)
+dev.off()
 
 winter22<-brick("2023_w.tif")
 winter19<-brick("2019_w.tif")
@@ -58,6 +59,7 @@ plotRGB(summer22, r=12, g=8, b=4, stretch="lin")
 mtext("winter-summer Short-Wave Infrared variation",side=3,line=2,outer=TRUE)
 mtext("WINTER - SUMMER",side=3,line=0,outer=TRUE)
 mtext("2022 - 2019 - 2016",side=2,line=0,outer=TRUE)
+dev.off()
 
 #NDVI -> vegetation index is good for quantifying the amount of vegetation.
 #While high values suggest dense canopy, low or negative values indicate urban and water features
@@ -88,7 +90,7 @@ writeRaster(ndvi_var, filename = "ndvi_annual_variation", format = "GTiff")
 
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(200)
 levelplot(ndvi_var,col.regions=cl, main="NDVI sesonal variation time series", names.attr=c("2016","2019","2022"))
-
+dev.off()
 #annual avarage ndvi
 a16_ndvi <- (ndvi_w16 + ndvi_s16)/2
 a19_ndvi <- (ndvi_w19 + ndvi_s19)/2
@@ -99,7 +101,7 @@ writeRaster(ndvi_a, filename = "NDVI_annual_avarage", format = "GTiff")
 
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(200)
 levelplot(ndvi_a,col.regions=cl, main="NDVI time series", names.attr=c("2016","2019","2022"))
-
+dev.off()
 #Moisture Index = (NIR- SWIR)/(NIR+SWIR)
 #Moisture Index (B8A-B11)/(B8A+B11)
 
@@ -129,7 +131,7 @@ writeRaster(mi_var, filename = "MI_annual_variation", format = "GTiff")
 
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(200)
 levelplot(mi_var,col.regions=cl, main="Vegetation moisture sesonal variation time series", names.attr=c("2016","2019","2022"))
-
+dev.off()
 #annual avarage moisture index
 a16_mi <- (ndvi_w16 + ndvi_s16)/2
 a19_mi <- (ndvi_w19 + ndvi_s19)/2
@@ -140,6 +142,7 @@ writeRaster(mi_av, filename = "MI_annual_av", format = "GTiff")
 
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(200)
 levelplot(mi_av,col.regions=cl, main="Vegetation moisture time series", names.attr=c("2016","2019","2022"))
+dev.off()
 
 MIsesonal <- brick("MI_annual_variation.tif")
 names(MIsesonal) <- c("varmi2016", "varmi2019", "varmi2022")
@@ -170,7 +173,7 @@ plot(ex_cor16_ndvi_no_na, ex_cor16_mi_no_na, main="Relationship between MI and N
 abline(model_ses_var, col="red")
 summary(model_ses_var)
 text(x = 1, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))
-              
+dev.off()              
 
 #2019
 cor19 <- stack(MIsesonal$varmi2019, NDVIsesonal$varndvi2019)
@@ -191,7 +194,7 @@ plot(ex_cor19_ndvi_no_na, ex_cor19_mi_no_na, main="Relationship between MI and N
 abline(model_ses_var, col="red")
 summary(model_ses_var)
 text(x = 0.5, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))
-
+dev.off()
 
 #2022
 cor22 <- stack(MIsesonal$varmi2022, NDVIsesonal$varndvi2022)
@@ -212,16 +215,20 @@ plot(ex_cor22_ndvi_no_na, ex_cor22_mi_no_na, main="Relationship between MI and N
 abline(model_ses_var, col="red")
 summary(model_ses_var)
 text(x = 0.5, y = 0.9, labels = paste("R-squared =", round(summary(model_ses_var)$r.squared, 4)))
+dev.off()
 
 #plotting maps of the regressions' variables
 cor16 <- stack(MIsesonal$varmi2016, NDVIsesonal$varndvi2016)
 plotRGB(cor16, r="varmi2016", g=NULL, b="varndvi2016", stretch = "hist")
+dev.off()
 
 cor19 <- stack(MIsesonal$varmi2019, NDVIsesonal$varndvi2019)
 plotRGB(cor19, r="varmi2019", g=NULL, b=varndvi2019, stretch = "hist")
+dev.off()
 
 cor22 <- stack(MIsesonal$varmi2022, NDVIsesonal$varndvi2022)
 plotRGB(cor22, r="varmi2022", g=NULL, b="varndvi2022", stretch = "hist")
+dev.off()
 
 #now we are going to analize the temporal evolution of ndvi
 NDVI <- brick("NDVI_annual_avarage.tif")

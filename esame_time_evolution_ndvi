@@ -1,0 +1,65 @@
+library(raster)
+library(rasterVis)
+library(rgdal)
+
+setwd("C:\\tel21\\data_ok\\")
+#now we are going to analize the temporal evolution of ndvi
+NDVI <- brick("NDVI_annual_avarage.tif")
+names(NDVI) <- c("ndvi_2016", "ndvi_2019", "ndvi_2022")
+
+# plot istrogram to visualize distributibution ad set correct class
+hist(NDVI)
+dev.off()
+
+#create matrix of classification and classify the product
+reclass_ndvi <- c(-1, 0.2, 1,    #no_vegetation: (-1 - 0.2) = 1
+              0.2, 0.35, 2,      #low: (0.2 - 0.35) = 2
+             0.35, 0.5, 3,       #low_medium(0.35 - 0.5) = 3
+             0.5, 0.65, 4,       #high_medium: (0.5 - 0.65) = 4
+             0.65, Inf, 5)       #high: (0.65 - inf) = 5
+reclass_m <- matrix(reclass_ndvi, ncol = 3, byrow = TRUE)
+NDVI_class <- reclassify(NDVI, reclass_ndvi)
+
+#plot, setting colour for 5 classes
+plot(NDVI_class, legend = FALSE, col = c("black", "orange", "yellow", "green", "dark green"), axes = FALSE)
+
+#set the legend
+legend("bottomright", legend = c("Desertic", "Very low vegetation coverage", "Medium-low vegetation coverage", "Medium-high vegetation coverage", "High vegetation coverage"),
+       fill = c("black", "orange", "yellow", "green", "dark green"))
+dev.off()
+
+#plot boxplot to visualize trend of ndvi
+boxplot(NDVI, outline=F, horizontal=T, axes=T, names=c("ndvi_2016", "ndvi_2019", "ndvi_2022"), main="NDVI Value Boxplot")
+dev.off()
+
+#now we repeat the same passage but on the differencial between 2022 and 2016 classifying the decrease.       
+NDVI_decrease <- NDVI$ndvi_2022 - NDVI$ndvi_2016
+#levelplot to visualize decrease
+clb <- colorRampPalette(c("blue","white","red"))(100)
+levelplot(NDVI_decrease, col.regions=clb)
+dev.off()
+
+hist(NDVI_decrease)
+reclass_ndvi_decrease <- c(-1, -0.2, 1,   
+              -0.2, -0.1, 2,      
+             -0.1, 0, 3,      
+             0, 0.1, 4,       
+             0.1, Inf, 5)       
+reclass_m <- matrix(reclass_ndvi_decrease, ncol = 3, byrow = TRUE)
+NDVI_decrease_class <- reclassify(NDVI_decrease, reclass_ndvi_decrease)
+
+#plot, setting colour for 5 classes
+plot(NDVI_decrease_class, legend = FALSE, col = c("red", "orange", "yellow", "light blue", "green"), axes = FALSE)
+
+#set the legend
+legend("bottomleft", legend = c("Strong decrease", "Decrease", "Light decrease", "Increase", "Strong increase"),
+       fill = c("red", "orange", "yellow", "light blue", "green"))
+dev.off()
+       
+       
+       
+       
+       
+
+
+
